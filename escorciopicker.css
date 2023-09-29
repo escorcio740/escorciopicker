@@ -1,0 +1,203 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.escorciopicker {
+	width: 100%;
+    max-width: 100%;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+}
+
+.escorciopicker-navigation {
+	height: 40px;
+    margin-bottom: 5px;
+    background-color: #f7f7f7;
+    border: 1px solid #e6e6e6;
+    display: flex;
+}
+
+.escorciopicker-navigation-prev, .escorciopicker-navigation-label, .escorciopicker-navigation-next{
+	min-width: 44px;
+    background: none;
+    margin: 0;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.escorciopicker-navigation-prev:hover, .escorciopicker-navigation-label:hover, .escorciopicker-navigation-next:hover {
+	opacity: .7;
+	background-color: #e6e6e6;
+}
+
+.escorciopicker-navigation-label {
+	flex-grow: 1;
+}
+
+.escorciopicker-navigation button[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.escorciopicker-month {
+	height: calc(100% - 50px);
+}
+
+.escorciopicker-month > *{
+	align-items: stretch !important;
+    height: 100%;
+    max-height: 100%;
+}
+
+.escorciopicker-weekdays {
+	display: flex;
+	text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .75em;
+}
+
+.escorciopicker-weekday {
+	flex-basis: 14.2857%; 
+	max-width: 14.2857%; 
+	overflow: hidden;
+	padding: 0.5em;
+}
+
+.escorciopicker-monthdays {
+	height: 100%;
+    max-height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.escorciopicker-monthdays-day {
+	flex-basis: 14.2857%;
+    max-width: 14.2857%;
+    overflow: hidden;
+    margin: 0;
+    border: 0;
+    outline: none;
+    text-align: center;
+    padding: 0.75em 0.5em;
+    background-color: white;
+    cursor: pointer;
+}
+
+.escorciopicker-monthdays-day.next-month {
+	color: rgba(16, 16, 16, 0.3);
+}
+
+.escorciopicker-monthdays-day.today {
+	background: #0c3675;
+    color: #fff;
+}
+
+.escorciopicker-monthdays-day.today:hover {
+	opacity: .7;
+}
+
+.escorciopicker-monthdays-day:hover:not(.today) {
+	opacity: .7;
+	background-color: #e6e6e6;
+}
+
+.escorciopicker-monthdays-day:disabled, .escorciopicker-months .escorciopicker-months-month:disabled {
+	background-color: #f0f0f0;
+	cursor: not-allowed;
+}
+
+.escorciopicker-monthdays-day.active {
+	background: #0c3675;
+    color: #fff;
+}
+
+.escorciopicker-months, .escorciopicker-years {
+	display: flex;
+    flex-wrap: wrap;
+}
+
+.escorciopicker-months .escorciopicker-months-month, .escorciopicker-years .escorciopicker-years-year {
+	flex-basis: 33.3333%;
+    max-width: 33.3333%;
+    overflow: hidden;
+    background-color: white;
+    cursor: pointer;
+
+    padding: 1.5em 0.5em;
+    border: 1px solid #e6e6e6;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
+
+abbr{
+	pointer-events: none;
+}
+
+
+/* MODAL CSS */
+
+.escorciopicker-modal {
+	position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.escorciopicker-modal-content {
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    left: 25%;
+    top: 5%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 1.5rem;
+    outline: 0;
+}
+
+.escorciopicker-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.4rem 1rem;
+}
+
+.escorciopicker-title{
+	width: 100%;
+    text-align: center;
+    font-weight: 400;
+}
+
+.escorciopicker-close {
+	cursor: pointer;
+	width: 36px;
+    height: 36px;
+    border: 1px solid #e6e6e6;
+    border-radius: 50%;
+    padding: 0;
+    color: #0c3675;
+    font-weight: 400;
+    margin: 0 0 0 auto;
+    fill: currentColor;
+    opacity: .7;
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") 50%/1em auto no-repeat
+}
+
+.escorciopicker-body{
+	position: relative;
+    flex: 1 1 auto;
+    padding: 1.4rem 1rem; 
+}
