@@ -232,7 +232,9 @@ const escorcioPicker = class {
 	}
 
 	changeNavigation(gotoMode){
-
+		if(this.mode === 3) {
+			return false;
+		}
 		if(gotoMode) {
 			this.mode = gotoMode;
 		} else {
