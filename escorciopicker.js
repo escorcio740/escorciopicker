@@ -18,6 +18,7 @@ const escorcioPicker = class {
 		this.next = document.getElementsByClassName("escorciopicker-navigation-next")[0];
 		this.navigation = document.getElementsByClassName("escorciopicker-navigation-label")[0];
 
+		this.onChangeValue = options.onChangeValue;
 
 		this.next.addEventListener("click", () => {
 			_this.nextMonth.call(_this);
@@ -37,6 +38,8 @@ const escorcioPicker = class {
 
 		this.closeIcon.addEventListener("click", () => {
 			_this.modal.style.display = 'none';
+			_this.mode = 1;
+			_this.changeNavigation(1);
 		});
 
 		document.addEventListener("click", (event) => {
@@ -52,6 +55,8 @@ const escorcioPicker = class {
 			this.minDate = new Date(options.minDate.year, (options.minDate.month + 1), (options.minDate.day + 1));
 		}
 
+		this.minYear = this.minDate.getFullYear();
+
 		this.minDate.setHours(0,0,0,0);
 
 		this.excludeDays = options.excludeDays;
@@ -63,9 +68,9 @@ const escorcioPicker = class {
 
 	generateDay(options) {
 		if(options.disable) {
-			return `<button data-day="${options.day}" class="escorciopicker-monthdays-day ${options.nextMonth ? "next-month" : ""} ${options.isToday ? "today" : ""}" disabled="" type="button"><abbr>${options.day}</abbr></button>`;
+			return `<button data-day="${options.day}" class="escorciopicker-monthdays-day ${options.nextMonth ? "next-month" : ""} ${options.prevMonth ? "prev-month" : ""} ${options.isToday ? "today" : ""}" disabled="" type="button"><abbr>${options.day}</abbr></button>`;
 		} else {
-			return `<button data-day="${options.day}" class="escorciopicker-monthdays-day ${options.nextMonth ? "next-month" : ""} ${options.isToday ? "today" : ""}" type="button"><abbr>${options.day}</abbr></button>`;
+			return `<button data-day="${options.day}" class="escorciopicker-monthdays-day ${options.nextMonth ? "next-month" : ""} ${options.prevMonth ? "prev-month" : ""} ${options.isToday ? "today" : ""}" type="button"><abbr>${options.day}</abbr></button>`;
 		}
 	}
 
@@ -119,6 +124,7 @@ const escorcioPicker = class {
 		for(let i = firstWeekDayOfTheMonth - 1; i >= 0; i--) {
 			generateDays.push(_this.generateDay({
 				day: previousMonthDate.getDate() - i,
+				prevMonth: true,
 				disable: _this.checkDisabledDate(new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth(), previousMonthDate.getDate() - i)),
 				isToday: false
 			}));
@@ -190,7 +196,7 @@ const escorcioPicker = class {
 		for(let i = startYear; i <= endYear + 1; i++) {
 			_this.decadeYears.push(i);
 			generateYears.push(_this.generateYear({
-				disable: _this.year > i,
+				disable: _this.minYear > i,
 				name: i,
 				year: i
 			}));	
@@ -232,9 +238,10 @@ const escorcioPicker = class {
 	}
 
 	changeNavigation(gotoMode){
-		if(this.mode === 3) {
+		if(this.mode === 3 && !gotoMode) {
 			return false;
 		}
+
 		if(gotoMode) {
 			this.mode = gotoMode;
 		} else {
@@ -336,7 +343,7 @@ const escorcioPicker = class {
 	}
 
 	getDateInFormat(year, month, day, format) {
-		const date = new Date(year, month - 1, day);
+		const date = new Date(year, month, day);
 
 		const formatTokens = {
 			'YYYY': date.getFullYear(),
@@ -362,8 +369,20 @@ const escorcioPicker = class {
 			this.year = parseInt(event.target.dataset.year);
 			this.changeNavigation(2);
 		} else if(classList.contains("escorciopicker-monthdays-day")) {
+			let selectedMonth = this.month;
+
+			if(classList.contains("next-month"))
+				selectedMonth = selectedMonth + 1
+
+			if(classList.contains("prev-month"))
+				selectedMonth = selectedMonth - 1
+	
 			this.day = parseInt(event.target.dataset.day);
-			this.input.value = this.getDateInFormat(this.year, this.month, this.day, this.formatDate);
+			if(this.onChangeValue) {
+				this.onChangeValue(this.getDateInFormat(this.year, selectedMonth, this.day, this.formatDate));
+			} else {
+				this.input.value = this.getDateInFormat(this.year, selectedMonth, this.day, this.formatDate);
+			}
 			this.modal.style.display = 'none';
 		}
 	}	
