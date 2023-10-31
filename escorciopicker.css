@@ -87,7 +87,7 @@ body{
     cursor: pointer;
 }
 
-.escorciopicker-monthdays-day.next-month {
+.escorciopicker-monthdays-day.next-month, .escorciopicker-monthdays-day.prev-month {
 	color: rgba(16, 16, 16, 0.3);
 }
 
